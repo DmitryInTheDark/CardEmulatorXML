@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ColorButton">
+
+        <attr name="button_text" format="string"/>
+        <attr name="button_style" format="enum">
+            <enum name="blue" value="0"/>
+        </attr>
+        <attr name="marginHorizontally" format="integer"/>
+        <attr name="marginLVertically" format="integer"/>
+        <attr name="marginLeft" format="integer"/>
+        <attr name="marginRight" format="integer"/>
+        <attr name="marginTop" format="integer"/>
+        <attr name="marginBottom" format="integer"/>
+
+    </declare-styleable>
+
+</resources>

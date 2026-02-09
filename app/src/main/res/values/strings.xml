@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">CardEmulator</string>
+
+    <!-- auth screen -->
+    <string name="welcome">Добро пожаловать</string>
+    <string name="auth_in_app">Авторизуйтесь в приложении</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="forgot_password"><u>Забыли пароль?</u></string>
+    <string name="auth">Войти</string>
+    <string name="incorrect_email">Неккоректный email</string>
+    <string name="incorrect_password">Неккоректный пароль</string>
+    <string name="registration"><u>Зарегистрироваться</u></string>
+
+    <!--  registration screen  -->
+    <string name="registration_title">Регистрация</string>
+    <string name="name">Имя</string>
+    <string name="email">Email</string>
+    <string name="repeat_password">Повторите пароль</string>
+
+    <!--  home fragment  -->
+    <string name="home_title">Главная</string>
+    <string name="history">История покупок</string>
+    <string name="balance">Пополнить баланс</string>
+
+</resources>
