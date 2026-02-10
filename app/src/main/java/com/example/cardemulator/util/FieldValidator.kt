@@ -12,4 +12,8 @@ object FieldValidator {
         val regex = Regex("(?=\\S+$)." + "{6,35}$")
         return regex.matches(password)
     }
+
+    fun isValidName(name: String): Boolean{
+        return name.isNotEmpty() && name.length <= 15
+    }
 }

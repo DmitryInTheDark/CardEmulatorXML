@@ -7,10 +7,10 @@
         android:title="@string/home_title"/>
     <item android:id="@+id/cards_graph"
         android:icon="@drawable/ic_card"
-        android:title=""/>
+        android:title="@string/cards_bottom_title"/>
     <item android:id="@+id/graph_profile"
         android:icon="@drawable/ic_person"
-        android:title=""/>
+        android:title="@string/profile_title"/>
 
 
 </menu>

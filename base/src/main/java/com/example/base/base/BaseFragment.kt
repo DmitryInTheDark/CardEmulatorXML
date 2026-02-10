@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
@@ -33,12 +34,12 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(): Fragment() 
         return binding.root
     }
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
         setupListeners()
         setupObservers()
-
     }
 
     protected fun showToast(@StringRes text: Int){

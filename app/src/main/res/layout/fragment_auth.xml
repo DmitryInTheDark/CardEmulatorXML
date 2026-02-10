@@ -56,7 +56,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
-            android:drawableStart="@drawable/ic_person"
+            android:drawableStart="@drawable/ic_lock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"

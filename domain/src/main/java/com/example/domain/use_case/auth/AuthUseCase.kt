@@ -1,7 +1,8 @@
 package com.example.domain.use_case.auth
 
-class AuthUseCase {
+import com.example.domain.models.UserModel
 
-    fun auth(){}
-
+interface AuthUseCase {
+    fun auth(login: String, password: String): UserModel
+    fun registration(name: String, email: String, password: String, secretKey: String, cardId: Int): UserModel
 }

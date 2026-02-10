@@ -18,10 +18,22 @@
     <string name="name">Имя</string>
     <string name="email">Email</string>
     <string name="repeat_password">Повторите пароль</string>
+    <string name="secure_key">ключ восстановления(для восстановления пароля)</string>
+    <string name="empty_field_error">Поле не может быть пустым</string>
+    <string name="uncorrect_value">Некоректное значение</string>
 
     <!--  home fragment  -->
     <string name="home_title">Главная</string>
     <string name="history">История покупок</string>
     <string name="balance">Пополнить баланс</string>
+
+    <!--  cards fragment  -->
+    <string name="cards_title">Выберите карту</string>
+    <string name="cards_bottom_title">Оплата</string>
+
+    <!--  profile fragment  -->
+    <string name="profile_title">Профиль</string>
+    <string name="change_name">Сменить имя</string>
+    <string name="leave_profile">Выйти из аккаунта</string>
 
 </resources>

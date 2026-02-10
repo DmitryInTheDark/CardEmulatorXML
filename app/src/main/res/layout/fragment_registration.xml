@@ -65,8 +65,26 @@
                 android:drawableStart="@drawable/ic_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="textEmailAddress"
                 android:maxLength="15"
+                android:drawablePadding="10dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSecretKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:hint="@string/secure_key">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSecretKey"
+                android:drawableStart="@drawable/ic_lock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="10"
                 android:drawablePadding="10dp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -108,9 +126,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.example.base.base.view.ColorButton
+            android:id="@+id/bRegistration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:button_text="@string/registration"/>
+            app:button_text="@string/registration" />
 
     </LinearLayout>
 

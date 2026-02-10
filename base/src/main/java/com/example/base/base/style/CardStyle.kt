@@ -5,8 +5,8 @@ import androidx.annotation.DrawableRes
 import com.example.base.R
 
 enum class CardStyle(
-    @DrawableRes image: Int,
-    @ColorRes textColor: Int
+    @get:DrawableRes val image: Int,
+    @get:ColorRes val textColor: Int
 ) {
 
     FEATURE(

@@ -78,7 +78,7 @@ class ColorButton @JvmOverloads constructor(
     }
 
     private fun updateMargins(){
-        val lp = (binding.root.layoutParams as MarginLayoutParams)
+        val lp = binding.root.layoutParams as MarginLayoutParams
             lp.setMargins(
                 marginLeft ?: marginHorizontally ?: lp.leftMargin,
                 marginTop ?: marginVertical ?: lp.topMargin,
