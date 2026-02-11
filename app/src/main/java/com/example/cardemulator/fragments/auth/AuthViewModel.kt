@@ -1,7 +1,6 @@
 package com.example.cardemulator.fragments.auth
 
 import com.example.base.base.BaseViewModel
-import com.example.domain.use_case.auth.AuthUseCase
+import javax.inject.Inject
 
-
-class AuthViewModel(): BaseViewModel()
+class AuthViewModel @Inject constructor(): BaseViewModel()

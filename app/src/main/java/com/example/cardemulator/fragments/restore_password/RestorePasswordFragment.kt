@@ -19,4 +19,8 @@ class RestorePasswordFragment: BaseFragment<RestorePasswordViewModel, FragmentRe
     override fun setupListeners() = with(binding){
 
     }
+
+    override fun inject() {
+
+    }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/mainCard" layout="@layout/holder_home_card"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilCardNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:hint="@string/choose_number"
+        android:orientation="horizontal"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_arrow_right"
+        android:layout_marginHorizontal="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_sharp"
+            android:drawablePadding="10dp"
+            android:maxLength="19" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_style"
+        style="@style/SecondaryTitleStyle"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvStyles"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        tools:listitem="@layout/holder_home_card" />
+
+</LinearLayout>

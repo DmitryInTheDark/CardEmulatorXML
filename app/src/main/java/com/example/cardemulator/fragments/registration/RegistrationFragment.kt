@@ -2,17 +2,23 @@ package com.example.cardemulator.fragments.registration
 
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.base.base.BaseFragment
 import com.example.cardemulator.R
+import com.example.cardemulator.app.CardEmulatorApp
 import com.example.cardemulator.databinding.FragmentRegistrationBinding
 import com.example.cardemulator.util.FieldValidator
+import javax.inject.Inject
 
 class RegistrationFragment: BaseFragment<RegistrationViewModel, FragmentRegistrationBinding>() {
 
-    override val viewModel: RegistrationViewModel by viewModels()
-    private val fields = with(binding){
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    override val viewModel: RegistrationViewModel by viewModels<RegistrationViewModel> { viewModelFactory }
+    private val fields by lazy { with(binding){
         listOf(tilName, tilEmail, tilPassword, tilRepeatPassword, tilSecretKey)
+        }
     }
 
     override fun initializeBinding(): FragmentRegistrationBinding = FragmentRegistrationBinding.inflate(layoutInflater)
@@ -22,6 +28,8 @@ class RegistrationFragment: BaseFragment<RegistrationViewModel, FragmentRegistra
 
     override fun setupUI() {
     }
+
+    override fun inject() = (requireActivity().application as CardEmulatorApp).appComponent.inject(this)
 
     override fun setupListeners() = with(binding){
         ibBack.setOnClickListener { findNavController().popBackStack() }
@@ -46,13 +54,20 @@ class RegistrationFragment: BaseFragment<RegistrationViewModel, FragmentRegistra
             else tilRepeatPassword.error = null
         }
         bRegistration.setOnClickListener {
-            if (fields.all { it.error == null && it.editText?.text != null}){
-                ChooseCardStyleBottomSheet(){
+            val emptyFields = fields.filter { it.editText?.text?.isEmpty() ?: true }
+            if (emptyFields.isNotEmpty()){
+                emptyFields.forEach { it.error = getString(R.string.empty_field_error) }
+                return@setOnClickListener
+            }
+            if (fields.any { it.error == null }){
+                ChooseCardStyleBottomSheet(name = tilName.editText!!.text.toString()){ style, number ->
                     viewModel.registration(
                         tilName.editText!!.text.toString(),
                         tilEmail.editText!!.text.toString(),
+                        number,
                         tilPassword.editText!!.text.toString(),
-                        tilSecretKey.editText!!.text.toString()
+                        tilSecretKey.editText!!.text.toString(),
+                        style
                     )
                 }.show(childFragmentManager, ChooseCardStyleBottomSheet::class.simpleName)
             }

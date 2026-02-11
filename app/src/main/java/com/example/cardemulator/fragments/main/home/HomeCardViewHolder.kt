@@ -1,7 +1,5 @@
 package com.example.cardemulator.fragments.main.home
 
-import android.R.attr.textColor
-import androidx.recyclerview.widget.RecyclerView
 import com.example.base.base.BaseViewHolder
 import com.example.base.base.holder.CardHolderModel
 import com.example.cardemulator.databinding.HolderHomeCardBinding
@@ -10,7 +8,8 @@ class HomeCardViewHolder(
     private val binding: HolderHomeCardBinding
 ): BaseViewHolder(binding) {
 
-    fun bind(item: CardHolderModel) = with(binding){
+    fun bind(item: CardHolderModel, callback: HomeCardsAdapter.OnClickListener) = with(binding){
+        root.setOnClickListener { callback.onCardClick(item) }
         tvName.apply {
             text = item.name
             setTextColor(context.getColor(item.style.textColor))

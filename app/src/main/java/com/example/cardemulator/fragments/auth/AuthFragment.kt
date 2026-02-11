@@ -37,4 +37,4 @@ class AuthFragment: BaseFragment<AuthViewModel, FragmentAuthBinding>() {
         tvRegistration.setOnClickListener { navigateTo(R.id.registrationFragment) }
     }
 
-}
+override fun inject(){}}

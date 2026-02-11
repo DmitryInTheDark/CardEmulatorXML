@@ -1,6 +1,8 @@
 package com.example.cardemulator.fragments.main.profile
 
 import com.example.base.base.BaseViewModel
+import javax.inject.Inject
 
-class ProfileViewModel: BaseViewModel() {
+
+class ProfileViewModel @Inject constructor(): BaseViewModel() {
 }

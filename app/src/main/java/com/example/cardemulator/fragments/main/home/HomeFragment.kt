@@ -9,12 +9,12 @@ import com.example.base.base.BasePagingFragment
 import com.example.base.base.holder.CardHolderModel
 import com.example.base.base.style.CardStyle
 import com.example.cardemulator.databinding.FragmentHomeBinding
-import com.example.cardemulator.fragments.main.cards.CardsViewModel
 
-class HomeFragment: BasePagingFragment<CardHolderModel, HomeCardViewHolder, HomeViewModel, FragmentHomeBinding>() {
+class HomeFragment: BasePagingFragment<CardHolderModel, HomeCardViewHolder, HomeViewModel, FragmentHomeBinding>(),
+HomeCardsAdapter.OnClickListener{
 
     override val viewModel: HomeViewModel by viewModels()
-    private val cardsAdapter = HomeCardsAdapter()
+    private val cardsAdapter = HomeCardsAdapter(this)
 
     override fun initializeBinding() = FragmentHomeBinding.inflate(layoutInflater)
 
@@ -25,6 +25,10 @@ class HomeFragment: BasePagingFragment<CardHolderModel, HomeCardViewHolder, Home
     }
 
     override fun setupListeners() {
+    }
+
+    override fun inject() {
+
     }
 
     override fun setupAdapterAndRecyclerView(): Pair<RecyclerView, RecyclerView.Adapter<HomeCardViewHolder>> {
@@ -50,4 +54,6 @@ class HomeFragment: BasePagingFragment<CardHolderModel, HomeCardViewHolder, Home
             )
             ))
     }
+
+    override fun onCardClick(model: CardHolderModel) = Unit
 }

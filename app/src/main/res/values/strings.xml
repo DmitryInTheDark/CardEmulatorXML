@@ -22,6 +22,10 @@
     <string name="empty_field_error">Поле не может быть пустым</string>
     <string name="uncorrect_value">Некоректное значение</string>
 
+    <!--  makeCardFragment  -->
+    <string name="choose_style">Выберите стиль карты</string>
+    <string name="choose_number">Выберите номер карты</string>
+
     <!--  home fragment  -->
     <string name="home_title">Главная</string>
     <string name="history">История покупок</string>

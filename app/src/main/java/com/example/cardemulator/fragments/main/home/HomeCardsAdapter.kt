@@ -7,9 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.base.base.holder.CardHolderModel
 import com.example.cardemulator.databinding.HolderHomeCardBinding
 
-class HomeCardsAdapter: RecyclerView.Adapter<HomeCardViewHolder>() {
+class HomeCardsAdapter(
+    private val callback: OnClickListener
+): RecyclerView.Adapter<HomeCardViewHolder>() {
 
     val currentList = mutableListOf<CardHolderModel>()
+
+    fun interface OnClickListener{
+        fun onCardClick(model: CardHolderModel)
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -21,7 +27,7 @@ class HomeCardsAdapter: RecyclerView.Adapter<HomeCardViewHolder>() {
     override fun onBindViewHolder(
         holder: HomeCardViewHolder,
         position: Int
-    ) = holder.bind(currentList[position])
+    ) = holder.bind(currentList[position], callback)
 
     override fun getItemCount() = currentList.size
 

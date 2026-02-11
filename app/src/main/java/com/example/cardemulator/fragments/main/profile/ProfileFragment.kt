@@ -18,4 +18,8 @@ class ProfileFragment: BaseFragment<ProfileViewModel, FragmentProfileBinding>() 
 
     override fun setupListeners() {
     }
+
+    override fun inject() {
+
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.data.data.local.repository
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.example.data.data.local.dao.CardsDao
 import com.example.data.data.local.dao.UserDao
 import com.example.data.data.local.entities.CardEntity
@@ -33,15 +32,24 @@ class UserRepository @Inject constructor(
         return Mappers.toUserModel(userDB.getUser(login, password))
     }
 
-    override fun registration(name: String, email: String, password: String, secretKey: String, cardId: Int): UserModel {
-        userDB.addUser(UserEntity(
-            login = email,
-            name = name,
-            password = password,
-            secretKey = secretKey,
-            history = listOf(),
-            cards = listOf(cardId),
-        )).let { return Mappers.toUserModel(userDB.getUserById(it.toInt())) }
+    override fun registration(name: String, email: String, number: String, password: String, secretKey: String, cardStyle: Int): UserModel {
+        cardsDao.addCard(
+            CardEntity(
+                style = cardStyle,
+                number = number,
+                name = name,
+                dateExpired = "03/33"
+            )
+        ).let {
+            userDB.addUser(UserEntity(
+                login = email,
+                name = name,
+                password = password,
+                secretKey = secretKey,
+                history = listOf(),
+                cards = listOf(it.toInt()),
+            )).let { userId -> return Mappers.toUserModel(userDB.getUserById(userId.toInt())) }
+        }
     }
 
     override fun createCard(name: String, style: Int, number: String): CardModel {

@@ -10,6 +10,7 @@ class MakeCardFragment: BaseFragment<MakeCardViewModel, FragmentMakeCardBinding>
 
     override fun initializeBinding() = FragmentMakeCardBinding.inflate(layoutInflater)
 
+override fun inject(){}
     override fun setupObservers() {
     }
 

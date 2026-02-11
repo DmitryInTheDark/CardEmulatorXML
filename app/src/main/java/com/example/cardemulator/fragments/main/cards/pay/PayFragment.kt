@@ -18,4 +18,8 @@ class PayFragment: BaseFragment<PayViewModel, FragmentPayBinding>() {
 
     override fun setupListeners() {
     }
+
+    override fun inject()  {
+
+    }
 }

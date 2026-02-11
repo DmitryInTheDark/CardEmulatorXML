@@ -3,9 +3,6 @@ package com.example.cardemulator.fragments.main.cards
 import androidx.fragment.app.viewModels
 import com.example.base.base.BaseFragment
 import com.example.cardemulator.databinding.FragmentCardsBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class CardsFragment: BaseFragment<CardsViewModel, FragmentCardsBinding>() {
 
@@ -20,6 +17,10 @@ class CardsFragment: BaseFragment<CardsViewModel, FragmentCardsBinding>() {
     }
 
     override fun setupListeners() {
+
+    }
+
+    override fun inject() {
 
     }
 }

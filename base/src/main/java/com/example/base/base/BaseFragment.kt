@@ -1,5 +1,6 @@
 package com.example.base.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(): Fragment() 
     abstract fun setupObservers()
     abstract fun setupUI()
     abstract fun setupListeners()
+    abstract protected fun inject()
 
     private lateinit var _binding: VB
 
@@ -32,6 +34,11 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(): Fragment() 
     ): View? {
         _binding = initializeBinding()
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        inject()
     }
 
     @CallSuper

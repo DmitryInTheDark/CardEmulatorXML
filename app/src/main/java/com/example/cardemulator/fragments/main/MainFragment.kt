@@ -34,6 +34,8 @@ class MainFragment: BaseFragment<MainViewModel, FragmentMainBinding>() {
 
     }
 
+    override fun inject(){}
+
     private fun initializeBottomNavigation(){
         with(binding){
             binding.root.doOnLayout {
