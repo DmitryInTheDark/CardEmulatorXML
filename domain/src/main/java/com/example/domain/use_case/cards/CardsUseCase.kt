@@ -10,7 +10,9 @@ interface CardsUseCase {
     ): CardModel
     fun deleteCard(cardId: Int)
     fun pay(cardId: Int, amount: Int)
-    fun getCards(): List<CardModel>
+    fun getCards(userId: Int): List<CardModel>
     fun getCard(cardId: Int): CardModel
     fun topUpCardBalance(cardId: Int, amount: Int)
+    fun isCardNumberExists(number: String): Boolean
+    fun addCardToUser(cardId: Int)
 }

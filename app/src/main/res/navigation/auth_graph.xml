@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_registrationFragment_to_graph_make_card"
             app:destination="@id/graph_make_card" />
+        <action
+            android:id="@+id/action_registrationFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <include app:graph="@navigation/graph_make_card" />
     <fragment

@@ -14,6 +14,11 @@ object FieldValidator {
     }
 
     fun isValidName(name: String): Boolean{
-        return name.isNotEmpty() && name.length <= 15
+        val regex = Regex("^[а-яА-ЯёЁ]+$")
+        return name.isNotEmpty() && name.length >= 2 && name.length <= 15 && regex.matches(name)
+    }
+
+    fun isValidSecretKey(key: String): Boolean{
+        return key.isNotEmpty() && key.length >= 5
     }
 }

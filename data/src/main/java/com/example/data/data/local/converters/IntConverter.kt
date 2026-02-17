@@ -11,7 +11,7 @@ object IntConverter {
 
     @TypeConverter
     fun stringToListInt(string: String): List<Int>{
-        return string.split(",").map { it.toInt() }
+        return string.split(",").map { it.trim().toInt() }
     }
 
 }

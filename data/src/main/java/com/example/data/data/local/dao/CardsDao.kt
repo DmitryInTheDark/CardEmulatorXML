@@ -16,4 +16,7 @@ interface CardsDao {
 
     @Query("SELECT * FROM cards WHERE id IN (:cardIds)")
     fun getCardList(cardIds: List<Int>): List<CardEntity>
+
+    @Query("SELECT * FROM cards")
+    fun getAllCards(): List<CardEntity>
 }

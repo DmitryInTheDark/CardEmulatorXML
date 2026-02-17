@@ -2,6 +2,7 @@ package com.example.cardemulator.app
 
 import android.app.Application
 import com.example.cardemulator.di.AppComponent
+import com.example.cardemulator.di.AppModule
 import com.example.cardemulator.di.DaggerAppComponent
 
 class CardEmulatorApp: Application() {
@@ -11,7 +12,10 @@ class CardEmulatorApp: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        appComponent = DaggerAppComponent.factory().create(this)
+        appComponent = DaggerAppComponent.factory().create(
+            this,
+            AppModule(this)
+        )
 
     }
 

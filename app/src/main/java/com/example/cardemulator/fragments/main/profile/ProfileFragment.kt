@@ -2,6 +2,7 @@ package com.example.cardemulator.fragments.main.profile
 
 import androidx.fragment.app.viewModels
 import com.example.base.base.BaseFragment
+import com.example.cardemulator.app.CardEmulatorApp
 import com.example.cardemulator.databinding.FragmentProfileBinding
 
 class ProfileFragment: BaseFragment<ProfileViewModel, FragmentProfileBinding>() {
@@ -19,7 +20,5 @@ class ProfileFragment: BaseFragment<ProfileViewModel, FragmentProfileBinding>() 
     override fun setupListeners() {
     }
 
-    override fun inject() {
-
-    }
+    override fun inject() = (requireActivity().application as CardEmulatorApp).appComponent.inject(this)
 }

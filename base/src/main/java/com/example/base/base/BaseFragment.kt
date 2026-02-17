@@ -52,6 +52,9 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(): Fragment() 
     protected fun showToast(@StringRes text: Int){
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
+    protected fun showToast(text: String){
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    }
 
     protected fun navigateTo(fragmentId: Int) = findNavController().navigate(fragmentId)
     protected fun navigateTo(direction: NavDirections) = findNavController().navigate(direction)

@@ -17,13 +17,36 @@ class RegistrationFragment: BaseFragment<RegistrationViewModel, FragmentRegistra
     lateinit var viewModelFactory: ViewModelProvider.Factory
     override val viewModel: RegistrationViewModel by viewModels<RegistrationViewModel> { viewModelFactory }
     private val fields by lazy { with(binding){
-        listOf(tilName, tilEmail, tilPassword, tilRepeatPassword, tilSecretKey)
+        listOf(tilName, tilEmail, tilPassword, tilRepeatPassword)
         }
     }
 
     override fun initializeBinding(): FragmentRegistrationBinding = FragmentRegistrationBinding.inflate(layoutInflater)
 
     override fun setupObservers() {
+        viewModel.state.observe(viewLifecycleOwner){
+            when(it){
+                is RegistrationViewModel.State.SuccessRegistration -> {
+                    navigateTo(RegistrationFragmentDirections.actionRegistrationFragmentToMainFragment())
+                }
+                is RegistrationViewModel.State.Error -> showToast(it.message)
+                is RegistrationViewModel.State.CreateCard -> {
+                    with(binding){
+                        ChooseCardStyleBottomSheet(name = tilName.editText!!.text.toString()){ style, number ->
+                            viewModel.registration(
+                                tilName.editText!!.text.toString(),
+                                tilEmail.editText!!.text.toString(),
+                                number,
+                                tilPassword.editText!!.text.toString(),
+                                style
+                            )
+                        }.show(childFragmentManager, ChooseCardStyleBottomSheet::class.simpleName)
+                    }
+                }
+
+                else -> Unit
+            }
+        }
     }
 
     override fun setupUI() {
@@ -34,6 +57,17 @@ class RegistrationFragment: BaseFragment<RegistrationViewModel, FragmentRegistra
     override fun setupListeners() = with(binding){
         ibBack.setOnClickListener { findNavController().popBackStack() }
         tilName.editText?.doOnTextChanged { text, _, _, _ ->
+            text?.let {
+                val formatted = it.toString().replaceFirstChar { char ->
+                    if (char.isLowerCase()) char.titlecase()
+                    else char.toString()
+                }
+
+                if (formatted != it.toString()) {
+                    tilName.editText?.setText(formatted)
+                    tilName.editText?.setSelection(formatted.length)
+                }
+            }
             if (!FieldValidator.isValidName(text.toString())) tilName.error = getString(R.string.uncorrect_value)
             else tilName.error = null
         }
@@ -41,13 +75,11 @@ class RegistrationFragment: BaseFragment<RegistrationViewModel, FragmentRegistra
             if (!FieldValidator.isValidEmail(text.toString())) tilEmail.error = getString(R.string.uncorrect_value)
             else tilEmail.error = null
         }
-        tilSecretKey.editText?.doOnTextChanged { text, _, _, _ ->
-            if ((text?.length ?: 0) < 8) tilSecretKey.error = getString(R.string.uncorrect_value)
-            else tilSecretKey.error = null
-        }
         tilPassword.editText?.doOnTextChanged { text, _, _, _ ->
             if (!FieldValidator.isValidPassword(text.toString())) tilPassword.error = getString(R.string.uncorrect_value)
             else tilPassword.error = null
+            if (tilRepeatPassword.editText?.text.toString() != text.toString()) tilRepeatPassword.error =  getString(R.string.uncorrect_value)
+            else tilRepeatPassword.error = null
         }
         tilRepeatPassword.editText?.doOnTextChanged { text, _, _, _ ->
             if (text.toString() != tilPassword.editText?.text.toString()) tilRepeatPassword.error = getString(R.string.uncorrect_value)
@@ -60,16 +92,7 @@ class RegistrationFragment: BaseFragment<RegistrationViewModel, FragmentRegistra
                 return@setOnClickListener
             }
             if (fields.any { it.error == null }){
-                ChooseCardStyleBottomSheet(name = tilName.editText!!.text.toString()){ style, number ->
-                    viewModel.registration(
-                        tilName.editText!!.text.toString(),
-                        tilEmail.editText!!.text.toString(),
-                        number,
-                        tilPassword.editText!!.text.toString(),
-                        tilSecretKey.editText!!.text.toString(),
-                        style
-                    )
-                }.show(childFragmentManager, ChooseCardStyleBottomSheet::class.simpleName)
+                viewModel.checkLogin(tilEmail.editText?.text.toString())
             }
         }
     }

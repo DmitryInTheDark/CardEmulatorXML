@@ -7,7 +7,7 @@ import com.example.data.data.local.dao.UserDao
 import com.example.data.data.local.entities.CardEntity
 import com.example.data.data.local.entities.UserEntity
 
-@Database(entities = [UserEntity::class, CardEntity::class], version = 1, exportSchema = false)
+@Database(entities = [UserEntity::class, CardEntity::class], version = 2, exportSchema = false)
 abstract class RoomDB(): RoomDatabase()  {
 
     abstract val userDao: UserDao

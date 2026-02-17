@@ -13,7 +13,6 @@ object Mappers {
             name = entity.name,
             login = entity.login,
             password = entity.password,
-            secretKey = entity.secretKey,
             history = entity.history,
             cards = entity.cards
         )
@@ -21,6 +20,7 @@ object Mappers {
 
     fun toCardModel(entity: CardEntity): CardModel {
         return CardModel(
+            id = entity.id,
             style = entity.style,
             number = entity.number,
             dateExpired = entity.dateExpired,

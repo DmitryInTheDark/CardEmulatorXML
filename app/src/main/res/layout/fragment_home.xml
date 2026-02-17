@@ -62,7 +62,8 @@
         android:orientation="horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:layout_width="100dp"
@@ -76,6 +77,31 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/balance"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llMakeCard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_card_home"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Создать карту"
             android:textSize="16sp"/>
 
     </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.cardemulator.fragments.main.cards.pay
 
 import androidx.fragment.app.viewModels
 import com.example.base.base.BaseFragment
+import com.example.cardemulator.app.CardEmulatorApp
 import com.example.cardemulator.databinding.FragmentPayBinding
 
 class PayFragment: BaseFragment<PayViewModel, FragmentPayBinding>() {
@@ -19,7 +20,5 @@ class PayFragment: BaseFragment<PayViewModel, FragmentPayBinding>() {
     override fun setupListeners() {
     }
 
-    override fun inject()  {
-
-    }
+    override fun inject() = (requireActivity().application as CardEmulatorApp).appComponent.inject(this)
 }

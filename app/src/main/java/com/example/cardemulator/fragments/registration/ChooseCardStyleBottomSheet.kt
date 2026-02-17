@@ -1,25 +1,32 @@
 package com.example.cardemulator.fragments.registration
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.base.base.holder.CardHolderModel
 import com.example.base.base.style.CardStyle
+import com.example.cardemulator.app.CardEmulatorApp
 import com.example.cardemulator.databinding.BottomSheetMakeCardBinding
 import com.example.cardemulator.fragments.main.home.HomeCardsAdapter
+import com.example.domain.use_case.cards.CardsUseCase
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class ChooseCardStyleBottomSheet(
     private val name: String,
     private val onDismissCallback: (style: CardStyle, number: String) -> Unit
 ): BottomSheetDialogFragment(), HomeCardsAdapter.OnClickListener {
+
+    @Inject
+    lateinit var cardsUseCase: CardsUseCase
 
     private val binding by lazy { BottomSheetMakeCardBinding.inflate(layoutInflater) }
     private val stylesList = CardStyle.entries.map {
@@ -36,8 +43,11 @@ class ChooseCardStyleBottomSheet(
         return binding.root
     }
 
+    fun inject() = (requireActivity().application as CardEmulatorApp).appComponent.inject(this)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        inject()
         setupListeners()
         setupFullHeight()
         with(binding) {
@@ -47,6 +57,7 @@ class ChooseCardStyleBottomSheet(
             )
             adapter.submitList(stylesList)
         }
+
         binding.mainCard.apply {
             tvNumber.text = "1234 5678 9012 3456"
             tvName.text = name
@@ -74,36 +85,15 @@ class ChooseCardStyleBottomSheet(
     }
 
     fun setupListeners() = with(binding) {
-        etCardNumber.addTextChangedListener(object : TextWatcher {
-            private var isFormatting = false
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                if (isFormatting || s == null) return
-                isFormatting = true
-                s.let {
-                    val digitsOnly = it.toString().replace(" ", "")
-                    val formatted = StringBuilder()
-                    for (i in digitsOnly.indices) {
-                        if (i > 0 && i % 4 == 0) {
-                            formatted.append(" ")
-                        }
-                        formatted.append(digitsOnly[i])
-                    }
-                    it.replace(0, it.length, formatted.toString())
+        bChooseStyle.setOnClickListener {
+            lifecycleScope.launch {
+                val randomNumber = withContext(Dispatchers.IO) {
+                    getRandomCardNumber()
                 }
-                isFormatting = false
+                onDismissCallback.invoke(selectedCardStyle, randomNumber)
+                dismiss()
             }
-        })
-        tilCardNumber.setEndIconOnClickListener { dismiss() }
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        onDismissCallback.invoke(
-            selectedCardStyle,
-            binding.etCardNumber.text.toString()
-        )
+        }
     }
 
     override fun onCardClick(model: CardHolderModel) {
@@ -117,5 +107,19 @@ class ChooseCardStyleBottomSheet(
             tvDateExpired.text = model.dateExpired
             tvDateExpired.setTextColor(requireContext().getColor(model.style.textColor))
         }
+    }
+
+    fun getRandomCardNumber(): String {
+        val number = generateRandomCardNumber()
+        val exists = cardsUseCase.isCardNumberExists(number)
+        return if (!exists) number
+        else generateRandomCardNumber()
+    }
+
+    private fun generateRandomCardNumber(): String {
+        val digits = (1..16)
+            .map { (0..9).random() }
+            .joinToString("")
+        return digits.chunked(4).joinToString(" ")
     }
 }

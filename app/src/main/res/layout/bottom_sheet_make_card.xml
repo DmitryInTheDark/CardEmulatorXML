@@ -8,26 +8,15 @@
 
     <include android:id="@+id/mainCard" layout="@layout/holder_home_card"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilCardNumber"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bChooseStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:hint="@string/choose_number"
-        android:orientation="horizontal"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/ic_arrow_right"
-        android:layout_marginHorizontal="20dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etCardNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_sharp"
-            android:drawablePadding="10dp"
-            android:maxLength="19" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:backgroundTint="@color/blue"
+        app:cornerRadius="14dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Выбрать"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"

@@ -13,26 +13,35 @@ import com.example.domain.use_case.profile.ProfileUseCase
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val context: Context,
-    private val userDB: UserDao,
+    context: Context,
+    private val userDao: UserDao,
     private val cardsDao: CardsDao
 ): AuthUseCase, CardsUseCase, ProfileUseCase {
     private val sharedPreferences = context.getSharedPreferences(USER_SHARED_PREF_NAME,
         Context.MODE_PRIVATE)
 
-    fun saveUser(id: Int, secretKey: String){
+    fun saveUser(id: Int){
         sharedPreferences.edit().apply{
             putInt(USER_ID_KEY, id)
-            putString(USER_SECRET_KEY, secretKey)
             apply()
         }
     }
 
-    override fun auth(login: String, password: String): UserModel {
-        return Mappers.toUserModel(userDB.getUser(login, password))
+    override fun getCurrentUser(): UserModel? {
+        val response = userDao.getUserById(sharedPreferences.getInt(USER_ID_KEY, -1))
+        return if (response != null) Mappers.toUserModel(response) else null
     }
 
-    override fun registration(name: String, email: String, number: String, password: String, secretKey: String, cardStyle: Int): UserModel {
+    override fun auth(login: String, password: String): UserModel? {
+        val user = userDao.getUser(login, password)
+        return if (user == null) null
+        else {
+            saveUser(user.id)
+            Mappers.toUserModel(user)
+        }
+    }
+
+    override fun registration(name: String, email: String, number: String, password: String, cardStyle: Int): UserModel {
         cardsDao.addCard(
             CardEntity(
                 style = cardStyle,
@@ -41,15 +50,25 @@ class UserRepository @Inject constructor(
                 dateExpired = "03/33"
             )
         ).let {
-            userDB.addUser(UserEntity(
+            userDao.addUser(UserEntity(
                 login = email,
                 name = name,
                 password = password,
-                secretKey = secretKey,
                 history = listOf(),
                 cards = listOf(it.toInt()),
-            )).let { userId -> return Mappers.toUserModel(userDB.getUserById(userId.toInt())) }
+            )).let { userId ->
+                saveUser(userId.toInt())
+                return Mappers.toUserModel(userDao.getUserById(userId.toInt())!!)
+            }
         }
+    }
+
+    override fun checkEmails(email: String): Boolean {
+        return userDao.getAllUsers().all { it.login != email }
+    }
+
+    override fun getAllUsers() {
+        userDao.getAllUsers()
     }
 
     override fun createCard(name: String, style: Int, number: String): CardModel {
@@ -66,8 +85,10 @@ class UserRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getCards(): List<CardModel> {
-        TODO("Not yet implemented")
+    override fun getCards(userId: Int): List<CardModel> {
+        return cardsDao.getCardList(
+            userDao.getUserById(userId)!!.cards
+        ).map { Mappers.toCardModel(it) }
     }
 
     override fun getCard(cardId: Int): CardModel {
@@ -76,6 +97,16 @@ class UserRepository @Inject constructor(
 
     override fun topUpCardBalance(cardId: Int, amount: Int) {
         TODO("Not yet implemented")
+    }
+
+    override fun isCardNumberExists(number: String): Boolean {
+        return cardsDao.getAllCards().all { it.number != number }
+    }
+
+    override fun addCardToUser(cardId: Int) {
+        val newCardList = userDao.getUserById(getCurrentUser()!!.id)!!.cards + cardId
+        val newUser = userDao.getUserById(getCurrentUser()!!.id)?.copy(cards = newCardList)
+        userDao.updateUser(newUser!!)
     }
 
     override fun changeName(): String {
@@ -87,8 +118,7 @@ class UserRepository @Inject constructor(
     }
 
     companion object{
-        private const val USER_SHARED_PREF_NAME = "users"
+        private const val USER_SHARED_PREF_NAME = "current_user"
         private const val USER_ID_KEY = "user_id"
-        private const val USER_SECRET_KEY = "user_secret"
     }
 }

@@ -22,7 +22,5 @@ data class UserEntity(
     val history: List<String>,
     @ColumnInfo("cardsIds")
     @field:TypeConverters(IntConverter::class)
-    val cards: List<Int>,
-    @ColumnInfo("secretKey")
-    val secretKey: String
+    val cards: List<Int>
 )
