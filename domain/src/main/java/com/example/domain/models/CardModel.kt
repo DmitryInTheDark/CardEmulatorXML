@@ -5,5 +5,6 @@ data class CardModel(
     val style: Int,
     val number: String,
     val name: String,
-    val dateExpired: String
+    val dateExpired: String,
+    val amount: Int
 )

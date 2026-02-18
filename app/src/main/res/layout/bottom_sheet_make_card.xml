@@ -16,6 +16,7 @@
         app:cornerRadius="14dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
         android:text="Выбрать"/>
 
     <com.google.android.material.textview.MaterialTextView

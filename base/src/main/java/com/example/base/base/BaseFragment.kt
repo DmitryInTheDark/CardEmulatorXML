@@ -56,8 +56,8 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding>(): Fragment() 
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
-    protected fun navigateTo(fragmentId: Int) = findNavController().navigate(fragmentId)
-    protected fun navigateTo(direction: NavDirections) = findNavController().navigate(direction)
-    protected fun navigateBack() = findNavController().popBackStack()
+    fun navigateTo(fragmentId: Int) = findNavController().navigate(fragmentId)
+    fun navigateTo(direction: NavDirections) = findNavController().navigate(direction)
+    fun navigateBack() = findNavController().popBackStack()
 
 }

@@ -24,7 +24,8 @@ object Mappers {
             style = entity.style,
             number = entity.number,
             dateExpired = entity.dateExpired,
-            name = entity.name
+            name = entity.name,
+            amount = entity.amount
         )
     }
 }

@@ -25,6 +25,12 @@ class MainActivity: AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navHostFragment.navController
     }
+    private val navController2 by lazy {
+        val navHostFragment =
+            supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        navHostFragment.navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,5 +50,9 @@ class MainActivity: AppCompatActivity() {
             }
             authUseCase.getAllUsers()
         }
+    }
+
+    fun navBack(){
+        binding.vp.displayedChild = 1
     }
 }

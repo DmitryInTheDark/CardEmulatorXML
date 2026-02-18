@@ -8,4 +8,5 @@ interface AuthUseCase {
     fun checkEmails(email: String): Boolean
     fun getAllUsers()
     fun getCurrentUser(): UserModel?
+    fun leaveAccount()
 }

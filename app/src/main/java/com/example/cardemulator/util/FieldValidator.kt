@@ -10,7 +10,7 @@ object FieldValidator {
 
     fun isValidPassword(password: String): Boolean{
         val regex = Regex("(?=\\S+$)." + "{6,35}$")
-        return regex.matches(password)
+        return password.isNotEmpty() && regex.matches(password)
     }
 
     fun isValidName(name: String): Boolean{

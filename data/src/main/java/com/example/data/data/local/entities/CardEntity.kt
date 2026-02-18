@@ -15,5 +15,7 @@ data class CardEntity(
     @ColumnInfo("dateExpired")
     val dateExpired: String,
     @ColumnInfo("name")
-    val name: String
+    val name: String,
+    @ColumnInfo("Amount")
+    val amount: Int
 )

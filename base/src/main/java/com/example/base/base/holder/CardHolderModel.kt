@@ -9,3 +9,11 @@ data class CardHolderModel(
     val number: String,
     val dateExpired: String
 ): BaseHolderModel
+
+data class CardHolderModelWithId(
+    val id: Int,
+    val style: CardStyle,
+    val name: String,
+    val number: String,
+    val dateExpired: String
+): BaseHolderModel

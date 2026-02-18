@@ -47,7 +47,8 @@ class UserRepository @Inject constructor(
                 style = cardStyle,
                 number = number,
                 name = name,
-                dateExpired = "03/33"
+                dateExpired = "03/33",
+                amount = 0
             )
         ).let {
             userDao.addUser(UserEntity(
@@ -73,7 +74,7 @@ class UserRepository @Inject constructor(
 
     override fun createCard(name: String, style: Int, number: String): CardModel {
         cardsDao.addCard(
-            CardEntity(style = style, number = number, name = name, dateExpired = "03/33" )
+            CardEntity(style = style, number = number, name = name, dateExpired = "03/33", amount = 0 )
         ).let { return Mappers.toCardModel(cardsDao.getCard(it.toInt())) }
     }
 
@@ -82,7 +83,14 @@ class UserRepository @Inject constructor(
     }
 
     override fun pay(cardId: Int, amount: Int) {
-        TODO("Not yet implemented")
+        val card = cardsDao.getCard(cardId)
+        val newAmount = card.amount - amount
+        if (newAmount < 0){
+            return
+        }else{
+            val newCard = card.copy(amount = newAmount)
+            cardsDao.updateCard(newCard)
+        }
     }
 
     override fun getCards(userId: Int): List<CardModel> {
@@ -92,11 +100,18 @@ class UserRepository @Inject constructor(
     }
 
     override fun getCard(cardId: Int): CardModel {
-        TODO("Not yet implemented")
+        return Mappers.toCardModel(cardsDao.getCard(cardId))
     }
 
     override fun topUpCardBalance(cardId: Int, amount: Int) {
-        TODO("Not yet implemented")
+        val card = cardsDao.getCard(cardId)
+        val newAmount = card.amount + amount
+        if (newAmount > 10000){
+            return
+        }else{
+            val newCard = card.copy(amount = newAmount)
+            cardsDao.updateCard(newCard)
+        }
     }
 
     override fun isCardNumberExists(number: String): Boolean {
@@ -114,7 +129,10 @@ class UserRepository @Inject constructor(
     }
 
     override fun leaveAccount() {
-        TODO("Not yet implemented")
+        sharedPreferences.edit().apply{
+            putInt(USER_ID_KEY, -1)
+            apply()
+        }
     }
 
     companion object{

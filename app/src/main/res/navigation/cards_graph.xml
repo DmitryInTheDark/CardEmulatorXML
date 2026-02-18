@@ -2,10 +2,25 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cards_graph"
-    app:startDestination="@id/cardsFragment">
+    app:startDestination="@id/cardFragmentContainer">
 
     <fragment
-        android:id="@+id/cardsFragment"
-        android:name="com.example.cardemulator.fragments.main.cards.CardsFragment"
-        android:label="CardsFragment" />
+        android:id="@+id/cardFragmentContainer"
+        android:name="com.example.cardemulator.fragments.main.cards.CardFragmentContainer"
+        android:label="CardFragmentContainer" >
+        <action
+            android:id="@+id/action_cardFragmentContainer_to_payFragment"
+            app:destination="@id/payFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.example.cardemulator.fragments.main.cards.pay.PayFragment"
+        android:label="PayFragment" >
+
+        <argument
+            android:name="cardId"
+            app:argType="integer"
+            app:nullable="false"/>
+
+    </fragment>
 </navigation>

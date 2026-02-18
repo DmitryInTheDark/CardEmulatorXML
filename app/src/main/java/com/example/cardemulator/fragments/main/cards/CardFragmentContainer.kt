@@ -4,30 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Insert
 import com.example.base.base.BaseFragment
-import com.example.base.base.holder.CardHolderModel
 import com.example.base.base.holder.CardHolderModelWithId
 import com.example.base.base.style.CardStyle
+import com.example.cardemulator.R
 import com.example.cardemulator.app.CardEmulatorApp
 import com.example.cardemulator.databinding.FragmentCardsBinding
-import com.example.cardemulator.fragments.main.home.HomeCardsAdapter
 import com.example.domain.use_case.auth.AuthUseCase
 import com.example.domain.use_case.cards.CardsUseCase
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CardsFragment(
-    private val onCardClick: (fragment: CardsFragment, cardId: Int) -> Unit
-): BottomSheetDialogFragment(), CardAdapter.OnClickListener {
+class CardFragmentContainer: Fragment(), CardAdapter.OnClickListener {
 
     @Inject
     lateinit var cardsUseCase: CardsUseCase
@@ -48,7 +42,6 @@ class CardsFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupFullHeight()
         (requireActivity().application as CardEmulatorApp).appComponent.inject(this)
         binding.rvCards.adapter = adapter
         binding.rvCards.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -60,27 +53,9 @@ class CardsFragment(
         }
     }
 
-    private fun setupFullHeight() {
-        dialog?.setOnShowListener { dialog ->
-            val bottomSheetDialog = dialog as BottomSheetDialog
-            val bottomSheetInternal = bottomSheetDialog.findViewById<View>(
-                com.google.android.material.R.id.design_bottom_sheet
-            ) ?: return@setOnShowListener
-
-            val behavior = BottomSheetBehavior.from(bottomSheetInternal)
-
-            // Расширяем на весь экран
-            bottomSheetInternal.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-            bottomSheetInternal.requestLayout()
-
-            behavior.state = BottomSheetBehavior.STATE_EXPANDED
-            behavior.isFitToContents = true  // Важный параметр для полного растяжения
-            behavior.skipCollapsed = true
-        }
-    }
-
     override fun onCardClick(model: CardHolderModelWithId) {
-        onCardClick.invoke(this, model.id)
+        findNavController().navigate(
+            CardFragmentContainerDirections.actionCardFragmentContainerToPayFragment(model.id)
+        )
     }
-
 }

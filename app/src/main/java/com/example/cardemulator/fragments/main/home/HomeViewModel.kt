@@ -12,6 +12,7 @@ import com.example.domain.use_case.auth.AuthUseCase
 import com.example.domain.use_case.cards.CardsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -25,6 +26,7 @@ class HomeViewModel @Inject constructor(
 
     fun initScreen(){
         viewModelScope.launch(Dispatchers.IO) {
+            currentList.clear()
             currentList.addAll(
                 cardsUseCase.getCards(authUseCase.getCurrentUser()!!.id)
                     .map { CardHolderModel(
@@ -52,6 +54,24 @@ class HomeViewModel @Inject constructor(
                 cardsUseCase.addCardToUser(it.id)
                 initScreen()
             }
+        }
+    }
+
+    suspend fun getMaxAmount(cardId: Int): Int{
+        return withContext(Dispatchers.IO){
+            10000 - cardsUseCase.getCard(cardId).amount
+        }
+    }
+
+    suspend fun getAmount(cardId: Int): Int{
+        return withContext(Dispatchers.IO){
+            cardsUseCase.getCard(cardId).amount
+        }
+    }
+
+    fun updateSum(cardId: Int, balance: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            cardsUseCase.topUpCardBalance(cardId, balance)
         }
     }
 

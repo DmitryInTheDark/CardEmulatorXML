@@ -3,6 +3,8 @@ package com.example.cardemulator.di
 import android.content.Context
 import com.example.cardemulator.MainActivity
 import com.example.cardemulator.fragments.auth.AuthFragment
+import com.example.cardemulator.fragments.main.cards.CardFragmentContainer
+import com.example.cardemulator.fragments.main.cards.CardsFragment
 import com.example.cardemulator.fragments.main.cards.pay.PayFragment
 import com.example.cardemulator.fragments.main.home.HomeFragment
 import com.example.cardemulator.fragments.main.profile.ProfileFragment
@@ -26,6 +28,8 @@ interface AppComponent {
 //    fun inject(fragment: CardsFragment)
     fun inject(fragment: HomeFragment)
     fun inject(fragment: ProfileFragment)
+    fun inject(fragment: CardsFragment)
+    fun inject(fragment: CardFragmentContainer)
 
     @Component.Factory
     interface Factory{

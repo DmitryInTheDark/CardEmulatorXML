@@ -38,6 +38,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="John Doe"
@@ -52,14 +53,7 @@
         android:paddingHorizontal="30dp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/change_name"
-            style="@style/SecondaryTitleStyle"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/black"/>
-
-        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvLeaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/leave_profile"
